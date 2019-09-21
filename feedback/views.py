@@ -1,16 +1,15 @@
 from django.http import JsonResponse
 from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import FeedbackSerializer
-from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
 
 class FeedbackView(APIView):
     renderer_classes = (JSONRenderer,)
 
-    @method_decorator(csrf_protect)
+    @method_decorator(csrf_exempt)
     def post(self, request):
         feedback = request.data.get('feedback')
 
