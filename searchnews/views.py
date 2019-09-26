@@ -23,7 +23,6 @@ class SearchNewsApiView(APIView):
     def query_builder(self, query: str):
         keywords = query.split(' ')
         keywords = [kw.strip() for kw in keywords if len(kw)>0]
-        print(keywords)
         return ' AND '.join(keywords)
 
 class SearchNewsRestApiView(SearchNewsApiView):
@@ -31,7 +30,6 @@ class SearchNewsRestApiView(SearchNewsApiView):
 
     def get(self, request):
         qry = request.GET.get('q')
-        print(qry)
         result_dict = newsapi.get_everything(q=self.query_builder(qry), sort_by='relevancy', language='en', page=2)
         articles_dict_list = result_dict['articles']
         sentilyzer = Sentilyzer(articles_dict_list=articles_dict_list)
