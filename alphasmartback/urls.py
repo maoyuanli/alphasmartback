@@ -20,6 +20,7 @@ import homepage.views
 import searchnews.views
 import stockmarket.views
 import feedback.views
+import quote.views
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,5 +34,6 @@ urlpatterns = [
     path('api/searchnews/',searchnews.views.SearchNewsRestApiView.as_view()),
     path('api/stockmarket/',stockmarket.views.QuandlMarketRestApiView.as_view()),
     path('api/feedback/',feedback.views.FeedbackView.as_view()),
+    path('api/quote/',quote.views.QuandlQuoteRestApiView.as_view())
     # path('',TemplateView.as_view(template_name=index_html))
 ]
