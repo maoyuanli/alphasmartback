@@ -28,6 +28,9 @@ class QuandlMarketRestApiView(APIView):
         idx_val = nonzero_qdf['Index Value']
         latest = idx_val[0]
         rest = idx_val[1:]
+
+        change_sets = {}
+
         for i, v in rest.items():
             benchmark = v
             change = latest / benchmark - 1
@@ -35,10 +38,19 @@ class QuandlMarketRestApiView(APIView):
             rslt_dict = {'change': change, 'latest_date': idx_val.index[0].date().strftime('%Y-%m-%d'),
                          'latest_val': latest,
                          'benchmark_date': i.date().strftime('%Y-%m-%d'), 'benchmark_val': v, 'timeframe': timeframe}
-            if need_positive and change > 0:
-                return rslt_dict
-            elif not need_positive and change < 0:
-                return rslt_dict
+            if len(change_sets) < 2:
+                if change > 0:
+                    change_sets['positive'] = rslt_dict
+                elif change < 0:
+                    change_sets['negative'] = rslt_dict
+            else:
+                break
+            latest = rest[i]
+
+        if need_positive:
+            return change_sets['positive']
+        else:
+            return change_sets['negative']
 
     def get_sentiment_score(self):
         homepage_view = HomepageRestApiView()

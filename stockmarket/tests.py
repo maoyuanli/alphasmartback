@@ -10,4 +10,6 @@ class ViewTests(TestCase):
         qm_view = QuandlMarketRestApiView()
         response = qm_view.get(request)
         rslt = json.loads(response.content)
+        sent_score = qm_view.get_sentiment_score()
+        print(sent_score)
         print(rslt)
