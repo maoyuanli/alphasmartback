@@ -21,6 +21,8 @@ import searchnews.views
 import stockmarket.views
 import feedback.views
 import quote.views
+import tweet.views
+import order.views
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,12 +30,11 @@ index_html = os.path.join(os.path.dirname(BASE_DIR), 'build','index.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('django/home/', homepage.views.HomepageApiView.as_view()),
-    # path('django/search/',searchnews.views.SearchNewsApiView.as_view()),
     path('api/homepage/',homepage.views.HomepageRestApiView.as_view()),
     path('api/searchnews/',searchnews.views.SearchNewsRestApiView.as_view()),
     path('api/stockmarket/',stockmarket.views.QuandlMarketRestApiView.as_view()),
     path('api/feedback/',feedback.views.FeedbackView.as_view()),
-    path('api/quote/',quote.views.QuandlQuoteRestApiView.as_view())
-    # path('',TemplateView.as_view(template_name=index_html))
+    path('api/quote/',quote.views.QuandlQuoteRestApiView.as_view()),
+    path('api/tweet/',tweet.views.TweetRestApiView.as_view()),
+    path('api/order/',order.views.OrderView.as_view())
 ]
