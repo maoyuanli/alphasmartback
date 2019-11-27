@@ -5,7 +5,7 @@ from .serializers import OrderSerializer
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from .models import Order
-
+from datetime import timedelta
 
 class OrderView(APIView):
     renderer_classes = (JSONRenderer,)
@@ -30,6 +30,6 @@ class OrderView(APIView):
             order_dict['order_type'] = order.order_type
             order_dict['order_price'] = order.order_price
             order_dict['order_volumn'] = order.order_volumn
-            order_dict['created_at'] = str(order.created_at).split('.')[0]
+            order_dict['created_at'] = str(order.created_at - timedelta(hours=5)).split('.')[0]
             order_list.append(order_dict)
         return JsonResponse({'orders': order_list}, safe=False)
