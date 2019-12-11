@@ -29,5 +29,6 @@ yarn-error.log*
 __pycache__/
 /__pycache__
 
-vscode
+.vscode
+.pytest_cache
 alphasmartbackve/
