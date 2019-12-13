@@ -23,6 +23,7 @@ import feedback.views
 import quote.views
 import tweet.views
 import order.views
+import account.views
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,5 +37,6 @@ urlpatterns = [
     path('api/feedback/',feedback.views.FeedbackView.as_view()),
     path('api/quote/',quote.views.QuandlQuoteRestApiView.as_view()),
     path('api/tweet/',tweet.views.TweetRestApiView.as_view()),
-    path('api/order/',order.views.OrderView.as_view())
+    path('api/order/',order.views.OrderView.as_view()),
+    path('api/account/',account.views.AccountView.as_view())
 ]

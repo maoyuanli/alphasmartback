@@ -40,13 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'homepage.apps.HomepageConfig',
     'searchnews.apps.SearchnewsConfig',
     'stockmarket.apps.StockmarketConfig',
     'feedback.apps.FeedbackConfig',
     'tweet.apps.TweetConfig',
-    'order.apps.OrderConfig'
+    'order.apps.OrderConfig',
+    'account.apps.AccountConfig'
 
 ]
 
