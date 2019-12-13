@@ -1,22 +1,23 @@
-from django.test import TestCase, RequestFactory
-
+from django.test import TestCase
 from account.views import AccountView
 from rest_framework.test import APIClient
-from rest_framework import status
+import json
 
 
 class AccountApiTest(TestCase):
     account_api = AccountView()
-
+    client = APIClient()
 
     def test_create_user(self):
-        self.account_api.register(
-            '/api/order',
+        post_data = json.dumps(
             {
-                'first_name': 'James',
-                'last_name': 'Bond',
-                'username': 'james007',
-                'email': 'james.bond@mi5.uk',
-                'password': 'testpass'
+                "first_name": "James",
+                "last_name": "Bond",
+                "username": "james007ca",
+                "email": "james.bond2@mi5.uk",
+                "password": "testpass"
             }
         )
+
+        self.client.post('api/account/', {"new_user": post_data})
+
