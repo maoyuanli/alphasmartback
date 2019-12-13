@@ -1,4 +1,5 @@
 from django.utils.decorators import method_decorator
+from rest_framework import permissions
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
@@ -8,7 +9,7 @@ from logging import getLogger
 logger = getLogger('AccountView Logger')
 
 
-class AccountView(APIView):
+class UserRegisterView(APIView):
 
     @method_decorator(csrf_exempt)
     def post(self, request):
@@ -25,5 +26,6 @@ class AccountView(APIView):
                                             last_name=new_user['last_name'])
             user.save()
             created_user = User.objects.get(username=new_user['username'])
-            return JsonResponse({"success": f"User created successfully: username : {created_user.username} | email : {created_user.email}"},
+            return JsonResponse({
+                                    "success": f"User created successfully: username : {created_user.username} | email : {created_user.email}"},
                                 safe=False)

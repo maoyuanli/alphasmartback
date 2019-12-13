@@ -38,5 +38,5 @@ urlpatterns = [
     path('api/quote/',quote.views.QuandlQuoteRestApiView.as_view()),
     path('api/tweet/',tweet.views.TweetRestApiView.as_view()),
     path('api/order/',order.views.OrderView.as_view()),
-    path('api/account/',account.views.AccountView.as_view())
+    path('api/register/', account.views.UserRegisterView.as_view())
 ]

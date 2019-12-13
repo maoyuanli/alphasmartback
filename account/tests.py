@@ -1,11 +1,11 @@
 from django.test import TestCase
-from account.views import AccountView
+from account.views import UserRegisterView
 from rest_framework.test import APIClient
 import json
 
 
 class AccountApiTest(TestCase):
-    account_api = AccountView()
+    account_api = UserRegisterView()
     client = APIClient()
 
     def test_create_user(self):
