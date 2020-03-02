@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 
 # Using the standard RequestFactory API to create a form POST request
 class ViewTests(TestCase):
+
     def test_post_feedback(self):
         client = APIClient()
         client.post('/api/feedback',
