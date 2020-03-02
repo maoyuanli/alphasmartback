@@ -1,6 +1,8 @@
-from django.test import TestCase, RequestFactory
-from .views import QuandlMarketRestApiView
 import json
+
+from django.test import TestCase, RequestFactory
+
+from .views import QuandlMarketRestApiView
 
 
 class ViewTests(TestCase):

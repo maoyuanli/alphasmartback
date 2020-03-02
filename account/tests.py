@@ -1,7 +1,9 @@
-from django.test import TestCase
-from account.views import UserRegisterView
-from rest_framework.test import APIClient
 import json
+
+from django.test import TestCase
+from rest_framework.test import APIClient
+
+from account.views import UserRegisterView
 
 
 class AccountApiTest(TestCase):
@@ -20,4 +22,3 @@ class AccountApiTest(TestCase):
         )
 
         self.client.post('api/account/', {"new_user": post_data})
-

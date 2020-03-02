@@ -8,9 +8,9 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
-from whitenoise import WhiteNoise
 
 from django.core.wsgi import get_wsgi_application
+from whitenoise import WhiteNoise
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

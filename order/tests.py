@@ -1,7 +1,7 @@
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 
 from order.views import OrderView
-import json
+
 
 class ViewTests(TestCase):
     order_api = OrderView()

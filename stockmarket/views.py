@@ -1,15 +1,19 @@
+import json
 from datetime import datetime, timedelta
+
 import pandas as pd
 import quandl
-from rest_framework.views import APIView
-from rest_framework.renderers import JSONRenderer
 from django.http import JsonResponse
+from rest_framework.renderers import JSONRenderer
+from rest_framework.views import APIView
+
 from homepage.views import HomepageRestApiView
-import json
+from utils.fetch_token import TokenFetcher
 
 
 class QuandlMarketRestApiView(APIView):
     renderer_classes = (JSONRenderer,)
+    quandl_token = TokenFetcher('token.json').fetch_token('quandl_key')
 
     def get(self, request):
         score = self.get_sentiment_score()
@@ -21,7 +25,7 @@ class QuandlMarketRestApiView(APIView):
 
     def index_return(self, need_positive: bool):
         three_month_back = datetime.now() - timedelta(days=90)
-        qdf = quandl.get("NASDAQOMX/XQC", authtoken="f_tQibQDxz8s2CABjKZU",
+        qdf = quandl.get("NASDAQOMX/XQC", authtoken=self.quandl_token,
                          start_date=three_month_back.strftime('%Y-%m-%d'))
         qdf.sort_index(ascending=False, inplace=True)
         nonzero_qdf = qdf[qdf['Index Value'] != 0]

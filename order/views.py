@@ -1,17 +1,21 @@
+from datetime import timedelta
+
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
-from .serializers import OrderSerializer
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+
 from .models import Order
-from datetime import timedelta
+from .serializers import OrderSerializer
+
 
 class OrderView(APIView):
     renderer_classes = (JSONRenderer,)
 
     @method_decorator(csrf_exempt)
     def post(self, request):
+        global order_saved
         order = request.data.get('order')
 
         serializer = OrderSerializer(data=order)

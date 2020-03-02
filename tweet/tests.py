@@ -1,7 +1,8 @@
+import json
+
 from django.test import TestCase, RequestFactory
 
 from tweet.views import TweetRestApiView
-import json
 
 
 class ViewTests(TestCase):

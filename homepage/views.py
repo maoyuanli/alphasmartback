@@ -1,39 +1,33 @@
-from django.shortcuts import render
+import os
+import re
+import string
+from collections import Counter
+
+import nltk
+import pandas as pd
 from django.http import JsonResponse
 from newsapi import NewsApiClient
-from rest_framework.renderers import JSONRenderer
-from rest_framework.views import APIView
-import nltk
 from nltk.corpus import stopwords
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import PorterStemmer
-import re
-import string
-import pandas as pd
-import os
-from collections import Counter
+from rest_framework.renderers import JSONRenderer
+from rest_framework.views import APIView
 
-newsapi = NewsApiClient(api_key='0cd11b45ffd949eaa03bbdbd23c5f95f')
+from utils.fetch_token import TokenFetcher
+
 cur_path = os.path.dirname(__file__)
 par_path = os.path.dirname(os.path.dirname(cur_path))
 nltk_data_path = os.path.join(par_path, 'static', 'nltk_data')
 nltk.data.path.append(nltk_data_path)
 
 
-class HomepageApiView(APIView):
-    def get(self, request):
-        result_dict = newsapi.get_top_headlines(category='business', language='en', country='us')
-        articles_dict_list = result_dict['articles']
-        senti_with_topword = TopWords(articles_dict_list=articles_dict_list)
-        sentilyzed_dict_list = senti_with_topword.get_topwords()
-        return render(request, 'homepage/homepage.html', {'articles': sentilyzed_dict_list})
-
-
 class HomepageRestApiView(APIView):
     renderer_classes = (JSONRenderer,)
+    token_fetcher = TokenFetcher('token.json')
+    newsapi = NewsApiClient(api_key=token_fetcher.fetch_token('news_api'))
 
     def get(self, request):
-        result_dict = newsapi.get_top_headlines(category='business', language='en', country='us')
+        result_dict = self.newsapi.get_top_headlines(category='business', language='en', country='us')
         articles_dict_list = result_dict['articles']
         senti_with_topword = TopWords(articles_dict_list=articles_dict_list)
         sentilyzed_dict_list = senti_with_topword.get_topwords()
@@ -91,7 +85,7 @@ class TopWords(Sentilyzer):
         clean_title_list = sentilyzed_df['clean_title'].to_list()
         clean_title_str = ' '.join(clean_title_list)
         sentilyzed_df['top_words_of_all'] = ','.join(self.top_words(clean_title_str))
-        sentilyzed_df['title'] = sentilyzed_df['title'].apply(lambda t:self.title_reformat(t))
+        sentilyzed_df['title'] = sentilyzed_df['title'].apply(lambda t: self.title_reformat(t))
         dict_list = sentilyzed_df.to_dict(orient='records')
         return dict_list
 
