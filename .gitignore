@@ -31,3 +31,8 @@ __pycache__/
 .vscode
 .pytest_cache
 alphasmartbackve/
+
+### token ###
+token.json
+settings.py
+docker-compose.yml

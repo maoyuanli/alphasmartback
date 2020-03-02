@@ -1,0 +1,3 @@
+.gitignore merge=ours
+alphasmartback/settings.py merge=ours
+docker-compose.yml merge=ours
