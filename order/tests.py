@@ -17,9 +17,3 @@ class ViewTests(TestCase):
             },
             format='json'
         )
-
-    def test_time(self):
-        from django.utils import timezone
-
-        now = timezone.now()
-        print(now)
