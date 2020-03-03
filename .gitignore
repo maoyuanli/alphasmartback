@@ -31,3 +31,4 @@ __pycache__/
 .vscode
 .pytest_cache
 alphasmartbackve/
+gitchain.sh
