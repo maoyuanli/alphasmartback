@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 
-from homepage.views import HomepageRestApiView
+from homepage.views import ArticleJsonResponse
 from utils.fetch_token import TokenFetcher
 
 
@@ -57,8 +57,7 @@ class QuandlMarketRestApiView(APIView):
             return change_sets['negative']
 
     def get_sentiment_score(self):
-        homepage_view = HomepageRestApiView()
-        homepage_rslt = homepage_view.get(request='api/homepage/')
+        homepage_rslt = ArticleJsonResponse.get_articles()
         homepage_rslt_dict = json.loads(homepage_rslt.content)
         homepage_rslt_df = pd.DataFrame.from_records(homepage_rslt_dict['articles'])
         sent_col_df = homepage_rslt_df[['sentiment']]

@@ -23,11 +23,18 @@ nltk.data.path.append(nltk_data_path)
 
 class HomepageRestApiView(APIView):
     renderer_classes = (JSONRenderer,)
+
+    def get(self, request):
+        return ArticleJsonResponse.get_articles()
+
+
+class ArticleJsonResponse:
     token_fetcher = TokenFetcher('token.json')
     newsapi = NewsApiClient(api_key=token_fetcher.fetch_token('news_api'))
 
-    def get(self, request):
-        result_dict = self.newsapi.get_top_headlines(category='business', language='en', country='us')
+    @staticmethod
+    def get_articles():
+        result_dict = ArticleJsonResponse.newsapi.get_top_headlines(category='business', language='en', country='us')
         articles_dict_list = result_dict['articles']
         senti_with_topword = TopWords(articles_dict_list=articles_dict_list)
         sentilyzed_dict_list = senti_with_topword.get_topwords()
